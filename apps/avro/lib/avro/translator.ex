@@ -42,9 +42,9 @@ defimpl Avro.Translator, for: Dictionary.Type.List do
 end
 
 defimpl Avro.Translator, for: Dictionary.Type.Map do
-  def type(%{dictionary: dictionary}) do
+  def type(%{dictionary: dictionary, name: name}) do
     fields = Enum.map(dictionary, &Avro.Translator.field/1)
-    record = :avro_record.type("record_0", fields)
+    record = :avro_record.type("record_#{name}", fields)
     :avro_union.type([:null, record])
   end
 
